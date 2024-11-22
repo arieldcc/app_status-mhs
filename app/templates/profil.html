@@ -1,0 +1,57 @@
+{% extends "master.html" %}
+
+{% block title %}Profil Peneliti{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <!-- Header Section -->
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="card-title mb-0">Profil Peneliti</h3>
+                </div>
+                <!-- Body Section -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center">
+                            <img src="{{ url_for('static', filename='img/peneliti.jpg') }}" 
+                                 alt="Foto Peneliti" 
+                                 class="rounded-circle img-fluid shadow-sm mb-3" 
+                                 style="width: 150px; height: 150px;">
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="text-primary">Nama Peneliti</h4>
+                            <p><i class="fas fa-graduation-cap"></i> Universitas Ichsan Gorontalo - Teknik Informatika</p>
+                            <p><i class="fas fa-briefcase"></i> Bidang: Pembelajaran Mesin, Analisis Data, dan Kecerdasan Buatan</p>
+                            <p><i class="fas fa-envelope"></i> Email: peneliti@example.com</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="text-primary">Tentang Saya</h5>
+                    <p>
+                        Saya adalah seorang peneliti di bidang kecerdasan buatan dan pembelajaran mesin.
+                        Fokus penelitian saya adalah membangun model prediktif yang dapat membantu dalam pengambilan keputusan,
+                        khususnya dalam bidang pendidikan. Saya memiliki pengalaman dalam menerapkan algoritma pembelajaran mesin
+                        seperti Naive Bayes, Decision Tree, dan teknik lainnya untuk menyelesaikan masalah dunia nyata.
+                    </p>
+                    <hr>
+                    <h5 class="text-primary">Keahlian</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-check text-success"></i> Pemrograman Python</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success"></i> Pembelajaran Mesin</li>
+                        <li class="list-group-item"><i class="fas fa-check text-success"></i> Analisis Data</li>
+                    </ul>
+                </div>
+                <!-- Footer Section -->
+                <div class="card-footer text-center">
+                    <h5>Hubungi Saya</h5>
+                    <a href="mailto:peneliti@example.com" class="btn btn-primary btn-sm mx-2"><i class="fas fa-envelope"></i> Email</a>
+                    <a href="https://www.linkedin.com/in/peneliti" target="_blank" class="btn btn-info btn-sm mx-2"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://github.com/peneliti" target="_blank" class="btn btn-dark btn-sm mx-2"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

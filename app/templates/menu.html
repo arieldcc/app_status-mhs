@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/"><i class="fas fa-home"></i> Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- Naive Bayes -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('naivebayes') }}">
+                        <i class="fas fa-brain"></i> Naive Bayes
+                    </a>
+                </li>
+                <!-- Decision Tree -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/decisiontree">
+                        <i class="fas fa-network-wired"></i> Decision Tree
+                    </a>
+                </li>
+                <!-- History -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/history">
+                        <i class="fas fa-history"></i> History
+                    </a>
+                </li>
+                <!-- Profil -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/profil">
+                        <i class="fas fa-id-card"></i> Profil
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

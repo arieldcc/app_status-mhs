@@ -1,0 +1,246 @@
+{% extends "master.html" %}
+
+{% block title %}History Prediksi{% endblock %}
+
+{% block css %}
+<!-- Tambahkan DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<!-- Chart.js CSS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center text-primary mb-4">History Prediksi dan Analisis</h2>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="historyTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="true">History</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="gender-chart-tab" data-bs-toggle="tab" data-bs-target="#gender-chart" type="button" role="tab" aria-controls="gender-chart" aria-selected="false">Grafik Jenis Kelamin</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="class-chart-tab" data-bs-toggle="tab" data-bs-target="#class-chart" type="button" role="tab" aria-controls="class-chart" aria-selected="false">Grafik Kelas</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="status-chart-tab" data-bs-toggle="tab" data-bs-target="#status-chart" type="button" role="tab" aria-controls="status-chart" aria-selected="false">Grafik Status</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="model-chart-tab" data-bs-toggle="tab" data-bs-target="#model-chart" type="button" role="tab" aria-controls="model-chart" aria-selected="false">Grafik Model</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="date-chart-tab" data-bs-toggle="tab" data-bs-target="#date-chart" type="button" role="tab" aria-controls="date-chart" aria-selected="false">Grafik Per Hari</button>
+        </li>
+    </ul>
+
+    <!-- Tab Contents -->
+    <div class="tab-content" id="historyTabsContent">
+        <!-- History Tab -->
+        <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
+            <div class="card shadow-lg mt-4">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="card-title mb-0">Daftar History Prediksi</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="historyTable" class="table table-bordered table-striped">
+                            <thead class="table-primary text-center">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Umur</th>
+                                    <th>Kelas</th>
+                                    <th>IPS 1</th>
+                                    <th>IPS 2</th>
+                                    <th>IPS 3</th>
+                                    <th>IPS 4</th>
+                                    <th>IPS 5</th>
+                                    <th>Status</th>
+                                    <th>Model</th>
+                                    <th>Waktu Prediksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in data %}
+                                <tr>
+                                    <td class="text-center">{{ row[0] }}</td>
+                                    <td class="text-center">{{ row[1] }}</td>
+                                    <td class="text-center">{{ row[2] }}</td>
+                                    <td class="text-center">{{ row[3] }}</td>
+                                    <td class="text-center">{{ row[4] }}</td>
+                                    <td class="text-center">{{ row[5] }}</td>
+                                    <td class="text-center">{{ row[6] }}</td>
+                                    <td class="text-center">{{ row[7] }}</td>
+                                    <td class="text-center">{{ row[8] }}</td>
+                                    <td class="text-center">{{ row[9] }}</td>
+                                    <td class="text-center">{{ row[10] }}</td>
+                                    <td class="text-center">{{ row[11] }}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="12" class="text-center">Tidak ada data history prediksi.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gender Chart Tab -->
+        <div class="tab-pane fade" id="gender-chart" role="tabpanel" aria-labelledby="gender-chart-tab">
+            <div class="card shadow-lg mt-4">
+                <div class="card-header bg-info text-white text-center">
+                    <h4 class="card-title mb-0">Grafik Berdasarkan Jenis Kelamin</h4>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <canvas id="genderChart" style="height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Class Chart Tab -->
+        <div class="tab-pane fade" id="class-chart" role="tabpanel" aria-labelledby="class-chart-tab">
+            <div class="card shadow-lg mt-4">
+                <div class="card-header bg-success text-white text-center">
+                    <h4 class="card-title mb-0">Grafik Berdasarkan Kelas</h4>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <canvas id="classChart" style="height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Chart Tab -->
+        <div class="tab-pane fade" id="status-chart" role="tabpanel" aria-labelledby="status-chart-tab">
+            <div class="card shadow-lg mt-4">
+                <div class="card-header bg-warning text-white text-center">
+                    <h4 class="card-title mb-0">Grafik Berdasarkan Status</h4>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <canvas id="statusChart" style="height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Chart Tab -->
+        <div class="tab-pane fade" id="model-chart" role="tabpanel" aria-labelledby="model-chart-tab">
+            <div class="card shadow-lg mt-4">
+                <div class="card-header bg-danger text-white text-center">
+                    <h4 class="card-title mb-0">Grafik Berdasarkan Model</h4>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <canvas id="modelChart"></canvas>
+                </div>                
+            </div>
+        </div>
+
+        <!-- Date Chart Tab -->
+        <div class="tab-pane fade" id="date-chart" role="tabpanel" aria-labelledby="date-chart-tab">
+            <div class="card shadow-lg mt-4">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h4 class="card-title mb-0">Grafik Berdasarkan Waktu Prediksi</h4>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <canvas id="dateChart" style="width: 100%; height: 300px;"></canvas>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#historyTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true
+        });
+    });
+
+    // Data untuk grafik
+    const genderData = {{ gender_data|tojson }};
+    const classData = {{ class_data|tojson }};
+    const statusData = {{ status_data|tojson }};
+    const modelData = {{ model_data|tojson }};
+    const dateData = {{ date_data|tojson }};
+
+    // Gender Chart
+    new Chart(document.getElementById('genderChart'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(genderData),
+            datasets: [{
+                data: Object.values(genderData),
+                backgroundColor: ['#007bff', '#dc3545']
+            }]
+        }
+    });
+
+    // Class Chart
+    new Chart(document.getElementById('classChart'), {
+        type: 'bar',
+        data: {
+            labels: Object.keys(classData),
+            datasets: [{
+                data: Object.values(classData),
+                backgroundColor: ['#ffc107', '#28a745']
+            }]
+        }
+    });
+
+    // Status Chart
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(statusData),
+            datasets: [{
+                data: Object.values(statusData),
+                backgroundColor: ['#17a2b8', '#6c757d']
+            }]
+        }
+    });
+
+    // Model Chart
+    new Chart(document.getElementById('modelChart'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(modelData),
+            datasets: [{
+                data: Object.values(modelData),
+                backgroundColor: ['#343a40', '#fd7e14']
+            }]
+        }
+    });
+
+    // Date Chart
+    new Chart(document.getElementById('dateChart'), {
+        type: 'line',
+        data: {
+            labels: Object.keys(dateData),
+            datasets: [{
+                label: 'Prediksi Per Hari',
+                data: Object.values(dateData),
+                backgroundColor: '#6c757d',
+                borderColor: '#6c757d',
+                fill: false,
+                tension: 0.4
+            }]
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "master.html" %}
+
+{% block title %}Naive Bayes{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title text-center">Form Prediksi Status Mahasiswa</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/naivebayes" method="post">
+                        <!-- Jenis Kelamin -->
+                        <div class="mb-3">
+                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                            <select id="jenis_kelamin" name="jenis_kelamin" class="form-select" required>
+                                <option value="" disabled>Pilih jenis kelamin</option>
+                                <option value="Laki-laki" {% if form_data.jenis_kelamin == "Laki-laki" %}selected{% endif %}>Laki-laki</option>
+                                <option value="Perempuan" {% if form_data.jenis_kelamin == "Perempuan" %}selected{% endif %}>Perempuan</option>
+                            </select>
+                        </div>
+                        <!-- Umur -->
+                        <div class="mb-3">
+                            <label for="umur" class="form-label">Umur</label>
+                            <input type="number" id="umur" name="umur" class="form-control"
+                                min="14" max="50" placeholder="Masukkan umur (14-50 tahun)"
+                                value="{{ form_data.umur }}" required>
+                        </div>
+                        <!-- Kelas -->
+                        <div class="mb-3">
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <select id="kelas" name="kelas" class="form-select" required>
+                                <option value="" disabled>Pilih kelas</option>
+                                <option value="Reguler Pagi" {% if form_data.kelas == "Reguler Pagi" %}selected{% endif %}>Reguler Pagi</option>
+                                <option value="Reguler Sore" {% if form_data.kelas == "Reguler Sore" %}selected{% endif %}>Reguler Sore</option>
+                            </select>
+                        </div>
+                        <!-- IPS -->
+                        {% for i in range(1, 6) %}
+                        <div class="mb-3">
+                            <label for="ips{{ i }}" class="form-label">IPS {{ i }}</label>
+                            <input type="number" id="ips{{ i }}" name="ips{{ i }}" class="form-control"
+                                step="0.01" min="0" max="4" placeholder="Masukkan nilai IPS {{ i }} (0-4)"
+                                value="{{ form_data['ips' + i|string] }}" required>
+                        </div>
+                        {% endfor %}
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Prediksi Status</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% if status is not none %}
+                {% if status == "Drop Out" %}
+                <div class="alert mt-3 alert-danger text-center">
+                    <h4>Status Prediksi: <strong>{{ status }}</strong></h4>
+                </div>
+                {% elif status == "Lulus" %}
+                <div class="alert mt-3 alert-info text-center">
+                    <h4>Status Prediksi: <strong>{{ status }}</strong></h4>
+                </div>
+                {% endif %}
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
